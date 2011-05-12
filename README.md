@@ -71,7 +71,7 @@ dataCallback
 -------------------------------
 dataCallback also takes the same three arguments:
 
-	countCallback(error, response, body);
+	dataCallback(error, response, body);
 	
 * error: Set to the error if an error occurs
 * response: The response of the remote request
