@@ -1,0 +1,20 @@
+{
+  "name": "huntergatherer-node",
+  "description": "A parallel REST client for speedy API calls",
+  "version": "0.0.1",
+  "homepage": "https://github.com/erictj/huntergatherer",
+  "author": "Eric Jennings <ericj@loopshot.com> (http://profile.io/erictj)",
+  "repository": {
+		"type": "git",
+		"url": "https://github.com/erictj/huntergatherer-node.git"
+	},
+  "engines": {
+    "node": ">=0.4.0"
+  },
+	"dependencies": {
+    "oauth" : ">=0.9.0",
+		"extendables" : ">=0.1.2",
+		"request" : ">=1.9.5"
+  },
+	"main": "index"
+}
