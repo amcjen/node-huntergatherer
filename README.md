@@ -102,7 +102,7 @@ We would call it like this:
 	var hg = require('huntergatherer');
 
 	var options = {
-		url: 'http://localhost:9876?offset=0&limit=100'
+		url: 'http://openapi.etsy.com/v2/listings/active?limit=50&offset=0'
 	};
 
 	hg.gather(options, 
