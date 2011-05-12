@@ -1,5 +1,5 @@
 {
-  "name": "huntergatherer-node",
+  "name": "huntergatherer",
   "description": "A parallel REST client for speedy API calls",
   "version": "0.0.1",
   "homepage": "https://github.com/erictj/huntergatherer",

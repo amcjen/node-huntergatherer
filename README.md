@@ -124,6 +124,10 @@ We would call it like this:
 			}
 
 
+INSTALLATION:
+=============
+npm install huntergatherer
+
 REQUIREMENTS:
 =============
 Here are the npm requirements for huntergatherer
