@@ -1,48 +1,58 @@
 (typeof define !== 'function' ? function($){ $(require, exports, module); } : define)(function(require, exports, module, undefined) {
 
-exports['test callbacks'] = function(assert) {
-	
+exports['test callbacks'] = function(assert, done) {
+
 	// fire up a test server to test against
 	var http = require('http');
-	http.createServer(function(request, response) {
-		var body = {};
+	var server = http.createServer(function(request, response) {
+		var body = [];
 		var url = require('url').parse(request.url, true);
-		
-		for (var i = url.query.offset; i <= url.query.offset + url.query.limit; i++) {
-			body[i] = i+100;
+
+		var offset = parseInt(url.query.offset);
+		var limit = parseInt(url.query.limit);
+
+		for (var i = offset; i < offset + limit; i++) {
+			body.push(i);
 		}
-		
 		var data = {
 			count: Object.keys(body).length,
 			results: body
 		}
-		
-		response.sendHeader(200, {'Content-Type': 'application/json'});  
-		response.write(JSON.stringify(data));  
-		response.close();  
-	}).listen(9876);
-	
-	
-  var hg = require('../lib/huntergatherer');
+
+
+		response.statusCode = 200;
+		response.setHeader('Content-Type', 'application/json');
+		response.write(JSON.stringify(data));
+		response.end();
+	});
+	server.listen(9876);
+
+
+	var hg = require('../lib/huntergatherer');
 	var options = {
-		url: 'http://localhost:9876',
+		url: 'http://localhost:9876/?limit=10&offset=0',
 		limitKey: 'limit',
 		offsetKey: 'offset',
-		limit: 10
+		limit: 10,
+		startOffset: 0
 	};
 
-	hg.gather(options, 
+	var callbackCount = 0;
+	hg.gather(options,
 			function(error, response, data) {
-				assert.equal(error, null, 'Error when getting count from remote server');
-				
-				var data = JSON.parse(data);
-				return data.count;
+				assert.equal(error, null, 'Successfully retrieved count from remote server');
+				return 100;
 			},
 			function(error, response, data) {
-				assert.equal(error, null, 'Error when processing data from remote server');
-				
+				assert.equal(error, null, 'Successfully processing data from remote server');
+
 				var data = JSON.parse(data);
-				assert.equal(data.results.length, 10);
+				assert.equal(data.results.length, 10, 'Received the correct number of results');
+				callbackCount++;
+				if (callbackCount == 11) {
+					done();
+					server.close();
+				}
 			}
 	);
 };
