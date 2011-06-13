@@ -40,17 +40,15 @@ exports['test callbacks'] = function(assert, done) {
 	var callbackCount = 0;
 	hg.gather(options,
 			function(error, response, data) {
-				assert.equal(error, null, 'Error when getting count from remote server');
-
-				var data = JSON.parse(data);
+				assert.equal(error, null, 'Successfully retrieved count from remote server');
 				return 100;
 			},
 			function(error, response, data) {
-				assert.equal(error, null, 'Error when processing data from remote server');
+				assert.equal(error, null, 'Successfully processing data from remote server');
 
 				var data = JSON.parse(data);
-				assert.equal(data.results.length, 10, 'Correct numbers of results');
-				callbackCount += 1;
+				assert.equal(data.results.length, 10, 'Received the correct number of results');
+				callbackCount++;
 				if (callbackCount == 11) {
 					done();
 					server.close();
