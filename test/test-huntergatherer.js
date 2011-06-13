@@ -8,8 +8,11 @@ exports['test callbacks'] = function(assert, done) {
 		var body = [];
 		var url = require('url').parse(request.url, true);
 
-		for (var i = url.query.offset; i < url.query.offset + url.query.limit; i++) {
-			body.push(i+100);
+		var offset = parseInt(url.query.offset);
+		var limit = parseInt(url.query.limit);
+
+		for (var i = offset; i < offset + limit; i++) {
+			body.push(i);
 		}
 		var data = {
 			count: Object.keys(body).length,
@@ -30,7 +33,8 @@ exports['test callbacks'] = function(assert, done) {
 		url: 'http://localhost:9876/?limit=10&offset=0',
 		limitKey: 'limit',
 		offsetKey: 'offset',
-		limit: 10
+		limit: 10,
+		startOffset: 0
 	};
 
 	var callbackCount = 0;
@@ -39,7 +43,7 @@ exports['test callbacks'] = function(assert, done) {
 				assert.equal(error, null, 'Error when getting count from remote server');
 
 				var data = JSON.parse(data);
-				return data.count;
+				return 100;
 			},
 			function(error, response, data) {
 				assert.equal(error, null, 'Error when processing data from remote server');
@@ -47,7 +51,7 @@ exports['test callbacks'] = function(assert, done) {
 				var data = JSON.parse(data);
 				assert.equal(data.results.length, 10, 'Correct numbers of results');
 				callbackCount += 1;
-				if (callbackCount == 2) {
+				if (callbackCount == 11) {
 					done();
 					server.close();
 				}
