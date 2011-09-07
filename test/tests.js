@@ -162,8 +162,11 @@ exports['test Etsy OAuth requests'] = function(test) {
     hg.gather(options,
             function(err, res, data) {
                 test.equal(err, undefined, 'Successfully retrieved count from remote server');
-                data = JSON.parse(data);
-                return data.count;
+                if (!err) {
+                    data = JSON.parse(data);
+                    return data.count;
+                } 
+                return undefined;
             },
             function(err, res, data) {
                 test.equal(err, undefined, 'Successfully processing data from remote server');
