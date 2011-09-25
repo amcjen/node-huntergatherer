@@ -134,8 +134,8 @@ We would call it like this:
 				
 				var data = JSON.parse(data);
 				// do something awesome with data.results;
-				dataCb();
 				console.log(data.results);
+				dataCb();
 			},
 			function(error, iterations) {
 				console.log('HunterGatherer completed. Called remote server ' + iterations + ' times');
