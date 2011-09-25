@@ -71,7 +71,7 @@ exports['Local Server'] = {
             function(err, res, data, dataCb) {
                 test.equal(err, undefined, 'Successfully processing data from remote server');
                 data = JSON.parse(data);
-                                test.equal(data.results.length, 10, 'Received the correct number of results');
+                test.equal(data.results.length, 10, 'Received the correct number of results');
                 dataCb();
             },
             function(err, iterations) {
@@ -97,7 +97,7 @@ exports['Local Server'] = {
                 data = JSON.parse(data);
                 setTimeout(function () {
                     test.equal(data.results.length, 10, 'Received the correct number of results');
-                                        dataCb();
+                    dataCb();
                 }, 80);
             },
             function(err, iterations) {
@@ -122,7 +122,7 @@ exports['Local Server'] = {
             function(err, res, data, dataCb) {
                 test.equal(err, undefined, 'Successfully processing data from remote server');
                 data = JSON.parse(data);
-                                test.equal(data.results.length, 10, 'Received the correct number of results');
+                test.equal(data.results.length, 10, 'Received the correct number of results');
                 dataCb();
             },
             function(err, iterations) {
@@ -176,7 +176,7 @@ exports['Local Server'] = {
             function(err, res, data, dataCb) {
                 test.equal(err, undefined, 'Successfully processing data from remote server');
                 data = JSON.parse(data);
-                                totalElements = totalElements.concat(data.results);
+                totalElements = totalElements.concat(data.results);
                 test.equal(data.results.length, 10, 'Received the correct number of results');
                 dataCb();
             },
@@ -258,12 +258,44 @@ exports['Local Server'] = {
             function(err, res, data, dataCb) {
                 test.equal(err, undefined, 'Successfully processing data from remote server');
                 data = JSON.parse(data);
-                                test.equal(data.results.length, 0, 'Received the correct number of results');
+                test.equal(data.results.length, 0, 'Received the correct number of results');
                 dataCb();
             },
             function(err, iterations) {
                 test.equal(err, undefined, 'Successfully processing completed callback from remote server');
                 test.equal(iterations, 0, 'iterated the proper number of times');
+                test.done();
+            }
+        );
+    },
+    'Throttle request between iterations given':  function(test) {
+        test.expect(34);
+
+        var options = getDefaultOptions();
+        options.offset = 0;
+        options.limit = 10;
+        options.throttleMs = 50;
+        
+        var start = new Date().getTime();
+        var ctr = 0;
+        
+        hg.gather(options,
+            function(err, res, data) {
+                test.equal(err, undefined, 'Successfully retrieved count from remote server');
+                data = JSON.parse(data);
+                return data.count;
+            },
+            function(err, res, data, dataCb) {
+                test.equal(err, undefined, 'Successfully processing data from remote server');
+                data = JSON.parse(data);
+                test.ok((new Date().getTime() - start) > options.throttleMs * ctr++, 'properly throttling curren request')
+                test.equal(data.results.length, 10, 'Received the correct number of results');
+                dataCb();
+            },
+            function(err, iterations) {
+                test.equal(err, undefined, 'Successfully processing completed callback from remote server');
+                test.equal(iterations, 10, 'iterated the proper number of times');
+                test.ok((new Date().getTime() - start) > 500, 'properly throttled all requests');
                 test.done();
             }
         );
