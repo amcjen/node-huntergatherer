@@ -52,8 +52,7 @@ function getDefaultOptions() {
         url: 'http://localhost:9876/?limit=10&offset=0',
         limitKey: 'limit',
         offsetKey: 'offset',
-        limit: 10,
-        startOffset: 0,
+        limit: 10
     };
 }
 
@@ -72,7 +71,7 @@ exports['Local Server'] = {
             function(err, res, data, dataCb) {
                 test.equal(err, undefined, 'Successfully processing data from remote server');
                 data = JSON.parse(data);
-                test.equal(data.results.length, 10, 'Received the correct number of results');
+                                test.equal(data.results.length, 10, 'Received the correct number of results');
                 dataCb();
             },
             function(err, iterations) {
@@ -98,7 +97,7 @@ exports['Local Server'] = {
                 data = JSON.parse(data);
                 setTimeout(function () {
                     test.equal(data.results.length, 10, 'Received the correct number of results');
-                    dataCb();
+                                        dataCb();
                 }, 80);
             },
             function(err, iterations) {
@@ -112,7 +111,7 @@ exports['Local Server'] = {
         test.expect(13);
 
         var options = getDefaultOptions();   
-        options.startOffset = 50;
+        options.offset = 50;
 
         hg.gather(options,
             function(err, res, data) {
@@ -123,7 +122,7 @@ exports['Local Server'] = {
             function(err, res, data, dataCb) {
                 test.equal(err, undefined, 'Successfully processing data from remote server');
                 data = JSON.parse(data);
-                test.equal(data.results.length, 10, 'Received the correct number of results');
+                                test.equal(data.results.length, 10, 'Received the correct number of results');
                 dataCb();
             },
             function(err, iterations) {
@@ -137,9 +136,9 @@ exports['Local Server'] = {
         test.expect(7);
 
         var options = getDefaultOptions();   
-        options.startOffset = 0;
+        options.offset = 0;
         options.maxToFetch = 20;
-
+        
         hg.gather(options,
             function(err, res, data) {
                 test.equal(err, undefined, 'Successfully retrieved count from remote server');
@@ -149,6 +148,7 @@ exports['Local Server'] = {
             function(err, res, data, dataCb) {
                 test.equal(err, undefined, 'Successfully processing data from remote server');
                 data = JSON.parse(data);
+                
                 test.equal(data.results.length, 10, 'Received the correct number of results');
                 dataCb();
             },
@@ -163,7 +163,7 @@ exports['Local Server'] = {
         test.expect(10);
 
         var options = getDefaultOptions();   
-        options.startOffset = 50;
+        options.offset = 50;
         options.maxToFetch = 30;
         var totalElements = [];
 
@@ -176,7 +176,7 @@ exports['Local Server'] = {
             function(err, res, data, dataCb) {
                 test.equal(err, undefined, 'Successfully processing data from remote server');
                 data = JSON.parse(data);
-                totalElements = totalElements.concat(data.results);
+                                totalElements = totalElements.concat(data.results);
                 test.equal(data.results.length, 10, 'Received the correct number of results');
                 dataCb();
             },
@@ -192,7 +192,7 @@ exports['Local Server'] = {
         test.expect(11);
 
         var options = getDefaultOptions();   
-        options.startOffset = 0;
+        options.offset = 0;
         options.limit = 25;
 
         hg.gather(options,
@@ -218,7 +218,7 @@ exports['Local Server'] = {
         test.expect(23);
 
         var options = getDefaultOptions();
-        options.startOffset = 0;
+        options.offset = 0;
         options.limit = 10;
         options.url = 'http://localhost:9876';
 
@@ -245,7 +245,7 @@ exports['Local Server'] = {
         test.expect(5);
 
         var options = getDefaultOptions();
-        options.startOffset = 0;
+        options.offset = 0;
         options.maxToFetch = 20;
         options.url = 'http://localhost:9877?zeroed=true';
         
@@ -258,7 +258,7 @@ exports['Local Server'] = {
             function(err, res, data, dataCb) {
                 test.equal(err, undefined, 'Successfully processing data from remote server');
                 data = JSON.parse(data);
-                test.equal(data.results.length, 0, 'Received the correct number of results');
+                                test.equal(data.results.length, 0, 'Received the correct number of results');
                 dataCb();
             },
             function(err, iterations) {
@@ -283,7 +283,7 @@ exports['test Etsy OAuth requests'] = {
         var etsyTokens = JSON.parse(fs.readFileSync('./etsytokens.json'));
 
         var options = getDefaultOptions();
-        options.startOffset = 0;
+        options.offset = 0;
         options.limit = 2;
         options.maxToFetch = 6;
         options.url = 'http://sandbox.openapi.etsy.com/v2/listings/active?limit=2&offset=0';
