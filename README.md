@@ -52,7 +52,7 @@ Here are the options you can pass, along with defaults.	 The only required optio
 * limit: If you want to grab more than the default 10 results per request, set the limit here
 * offset: If you don't want to retrieve everything by starting with offset 0, set this to the starting offset you want to start from
 * maxToFetch: Set this to the total number of records you wish to fetch, regardless of the number of records available on the remote endpoint.	Good for testing when you don't want to fetch 100,000 records from the endpoint, even if they have 100,000 available. Leave as undefined to fetch all available records.
-* maxConnsPerSecond: Some API endpoints have a max-connections-per-second limit.	This allows you to set a throttle between subsequent requests.	For instance, if your API endpoint has a setting of 10 max-connections-per-second, set this to 10, and HunterGatherer will put a 105ms timeout between each request, just a bit over the 10 per second rule, to be safe.
+* maxConnsPerSecond: Some API endpoints have a max-connections-per-second limit.	This allows you to set a throttle between subsequent requests.	For instance, if your API endpoint has a setting of 10 max-connections-per-second, set this to 10, and HunterGatherer will put a 105ms timeout between each request, just a bit over the 10 per second rule, to be safe.  Leave as undefined to kick it into 6th gear, redlining it to have no speed limit whatsoever.
 
 countCallback
 -------------------------------
