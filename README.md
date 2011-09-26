@@ -40,7 +40,7 @@ Here are the options you can pass, along with defaults.	 The only required optio
 		limit: 10,
 		offset: 0,
 		maxToFetch: undefined,
-		throttleMs: 0,
+		maxConnsPerSecond: undefined,
 	}
 
 * url:	The full URL of the remote REST endpoint.	 Include query variables here if necessary
@@ -51,8 +51,8 @@ Here are the options you can pass, along with defaults.	 The only required optio
 * offsetKey: The remote REST endpoint URL will also have a variable name it uses for offset.	Defaults to 'offset'
 * limit: If you want to grab more than the default 10 results per request, set the limit here
 * offset: If you don't want to retrieve everything by starting with offset 0, set this to the starting offset you want to start from
-* maxToFetch: Set this to the total number of records you wish to fetch, regardless of the number of records available on the remote endpoint.	Good for testing when you don't want to fetch 100,000 records from the endpoint, even if they have 100,000 available.
-* throttleMs: Some API endpoints have a max-requests-per-second limit.	This allows you to set a throttle between subsequent requests.	For instance, if your API endpoint has a setting of 10 max-requests-per-second, set this to something like 120, and HunterGatherer will put a 120ms timeout between each request, just a bit over the 10 per second rule, to be safe.
+* maxToFetch: Set this to the total number of records you wish to fetch, regardless of the number of records available on the remote endpoint.	Good for testing when you don't want to fetch 100,000 records from the endpoint, even if they have 100,000 available. Leave as undefined to fetch all available records.
+* maxConnsPerSecond: Some API endpoints have a max-connections-per-second limit.	This allows you to set a throttle between subsequent requests.	For instance, if your API endpoint has a setting of 10 max-connections-per-second, set this to 10, and HunterGatherer will put a 105ms timeout between each request, just a bit over the 10 per second rule, to be safe.
 
 countCallback
 -------------------------------

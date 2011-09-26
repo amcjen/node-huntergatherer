@@ -274,10 +274,10 @@ exports['Local Server'] = {
         var options = getDefaultOptions();
         options.offset = 0;
         options.limit = 10;
-        options.throttleMs = 50;
+        options.maxConnsPerSecond = 10;
         
         var start = new Date().getTime();
-        var ctr = 0;
+        var lastTime = start;
         
         hg.gather(options,
             function(err, res, data) {
@@ -288,14 +288,15 @@ exports['Local Server'] = {
             function(err, res, data, dataCb) {
                 test.equal(err, undefined, 'Successfully processing data from remote server');
                 data = JSON.parse(data);
-                test.ok((new Date().getTime() - start) > options.throttleMs * ctr++, 'properly throttling curren request')
+                test.ok((new Date().getTime() - lastTime) > 1000/options.maxConnsPerSecond, 'properly throttled current request');
+                lastTime = new Date().getTime();
                 test.equal(data.results.length, 10, 'Received the correct number of results');
                 dataCb();
             },
             function(err, iterations) {
                 test.equal(err, undefined, 'Successfully processing completed callback from remote server');
                 test.equal(iterations, 10, 'iterated the proper number of times');
-                test.ok((new Date().getTime() - start) > 500, 'properly throttled all requests');
+                test.ok((new Date().getTime() - start) > 1000, 'properly throttled all requests');
                 test.done();
             }
         );
