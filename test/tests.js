@@ -241,6 +241,33 @@ exports['Local Server'] = {
             }
         );
     },
+    'Paging with offset sent as string, not number':  function(test) {
+        test.expect(23);
+
+        var options = getDefaultOptions();
+        options.offset = '0';
+        options.limit = 10;
+        options.url = 'http://localhost:9876';
+
+        hg.gather(options,
+            function(err, res, data) {
+                test.equal(err, undefined, 'Successfully retrieved count from remote server');
+                data = JSON.parse(data);
+                return data.count;
+            },
+            function(err, res, data, dataCb) {
+                test.equal(err, undefined, 'Successfully processing data from remote server');
+                data = JSON.parse(data);
+                test.equal(data.results.length, 10, 'Received the correct number of results');
+                dataCb();
+            },
+            function(err, iterations) {
+                test.equal(err, undefined, 'Successfully processing completed callback from remote server');
+                test.equal(iterations, 10, 'iterated the proper number of times');
+                test.done();
+            }
+        );
+    },
     'Result with 0 entries':  function(test) {
         test.expect(5);
 
