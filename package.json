@@ -1,24 +1,24 @@
 {
-    "name": "huntergatherer",
-    "description": "A parallel REST client for speedy API calls",
-    "version": "0.6.8",
-    "homepage": "https://github.com/erictj/huntergatherer",
-    "author": "Eric Jennings <ericj@loopshot.com> (http://profile.io/erictj)",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/erictj/node-huntergatherer.git"
-    },
-    "engines": {
-        "node": ">=0.4.0"
-    },
-    "dependencies": {
-        "oauth" : ">=0.9.0",
-        "extendables" : ">=0.1.2",
-        "request" : ">=1.9.5",
-        "async" : ">=0.1.9"
-    }, 
-    "devDependencies": {
-        "nodeunit": ">=0.3.1"
-    },
-    "main": "index"
+  "name": "huntergatherer",
+  "description": "A parallel REST client for speedy API calls",
+  "version": "0.6.9",
+  "homepage": "https://github.com/erictj/huntergatherer",
+  "author": "Eric Jennings <ericj@loopshot.com> (http://profile.io/erictj)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/erictj/node-huntergatherer.git"
+  },
+  "engines": {
+    "node": ">=0.4.0"
+  },
+  "dependencies": {
+    "oauth": ">=0.9.0",
+    "extendables": ">=0.1.2",
+    "request": ">=1.9.5",
+    "async": ">=0.1.9"
+  },
+  "devDependencies": {
+    "nodeunit": ">=0.3.1"
+  },
+  "main": "index"
 }
